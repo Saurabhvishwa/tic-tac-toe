@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Cell from "../cell/Cell";
 import "./Board.css";
 
@@ -19,39 +19,39 @@ export default function Board({
       setState(arr);
       setMoves(moves + 1);
     }
-    if (moves == 9) {
+    if (moves === 9) {
       setWinner("Tie");
       return;
     }
     changePlayer();
   }
   useEffect(() => {
-    checkWinner(state);
-  }, [state]);
-  function checkWinner() {
-    const arr = [
-      [0, 1, 2],
-      [3, 4, 5],
-      [6, 7, 8],
-      [0, 3, 6],
-      [1, 4, 7],
-      [2, 5, 8],
-      [0, 4, 8],
-      [2, 4, 6],
-    ];
-    for (var i = 0; i < arr.length; i++) {
-      if (
-        state[arr[i][0]] != null &&
-        state[arr[i][0]] === state[arr[i][1]] &&
-        state[arr[i][0]] === state[arr[i][2]]
-      ) {
-        setWinner(state[arr[i][0]]);
+    function checkWinner() {
+      const arr = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6],
+      ];
+      for (var i = 0; i < arr.length; i++) {
+        if (
+          state[arr[i][0]] != null &&
+          state[arr[i][0]] === state[arr[i][1]] &&
+          state[arr[i][0]] === state[arr[i][2]]
+        ) {
+          setWinner(state[arr[i][0]]);
+        }
+      }
+      if (moves === 9) {
+        setWinner("Tie");
       }
     }
-    if (moves === 9) {
-      setWinner("Tie");
-    }
-  }
+    checkWinner();
+  }, [state, moves, setWinner]);
   return (
     <div className="board">
       <div className="row first">
